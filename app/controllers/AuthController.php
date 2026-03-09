@@ -7,6 +7,7 @@ class AuthController {
     public function login(){
 
         require_once __DIR__ . '/../views/login.php';
+
     }
 
 
@@ -17,8 +18,8 @@ class AuthController {
             exit;
         }
 
-        $email = $_POST['email'];
-        $password = $_POST['password'];
+        $email = trim($_POST['email']);
+        $password = trim($_POST['password']);
 
         $usuarioModel = new Usuario();
 
@@ -34,13 +35,17 @@ class AuthController {
             return;
         }
 
-        session_start();
+        /* iniciar sesión solo si no existe */
+        if(session_status() === PHP_SESSION_NONE){
+            session_start();
+        }
 
         $_SESSION['usuario_id'] = $usuario['id'];
         $_SESSION['usuario_nombre'] = $usuario['nombre'];
         $_SESSION['usuario_rol'] = $usuario['rol'];
 
-        header("Location: index.php");
+        /* redirigir al dashboard */
+        header("Location: index.php?controller=dashboard&action=index");
         exit;
 
     }
@@ -48,7 +53,10 @@ class AuthController {
 
     public function logout(){
 
-        session_start();
+        if(session_status() === PHP_SESSION_NONE){
+            session_start();
+        }
+
         session_destroy();
 
         header("Location: index.php?controller=auth&action=login");
