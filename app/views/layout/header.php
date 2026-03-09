@@ -4,7 +4,6 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 $currentController = $_GET['controller'] ?? 'dashboard';
-$currentAction = $_GET['action'] ?? 'index';
 
 function isActive($controllerName)
 {
@@ -35,6 +34,7 @@ function isActive($controllerName)
             --success:#16a34a;
             --warning:#f59e0b;
             --danger:#dc2626;
+            --info:#0ea5e9;
             --shadow:0 10px 30px rgba(0,0,0,.08);
             --radius:16px;
         }
@@ -355,6 +355,38 @@ function isActive($controllerName)
             font-size:22px;
         }
 
+        .toolbar{
+            display:flex;
+            gap:12px;
+            align-items:center;
+            flex-wrap:wrap;
+            margin-bottom:18px;
+        }
+
+        .search-box{
+            position:relative;
+            min-width:280px;
+            flex:1;
+            max-width:420px;
+        }
+
+        .search-box i{
+            position:absolute;
+            left:14px;
+            top:50%;
+            transform:translateY(-50%);
+            color:#9ca3af;
+        }
+
+        .search-box input{
+            width:100%;
+            padding:12px 14px 12px 40px;
+            border:1px solid #d1d5db;
+            border-radius:12px;
+            font-size:14px;
+            background:#fff;
+        }
+
         .btn{
             display:inline-flex;
             align-items:center;
@@ -529,6 +561,43 @@ function isActive($controllerName)
             padding:22px;
         }
 
+        .alert{
+            display:flex;
+            align-items:flex-start;
+            gap:12px;
+            padding:14px 16px;
+            border-radius:14px;
+            margin-bottom:18px;
+            border:1px solid transparent;
+            box-shadow:var(--shadow);
+        }
+
+        .alert i{
+            margin-top:2px;
+        }
+
+        .alert-success{
+            background:#ecfdf5;
+            border-color:#a7f3d0;
+            color:#065f46;
+        }
+
+        .alert-error{
+            background:#fef2f2;
+            border-color:#fecaca;
+            color:#991b1b;
+        }
+
+        .alert-info{
+            background:#eff6ff;
+            border-color:#bfdbfe;
+            color:#1e3a8a;
+        }
+
+        .hidden-row{
+            display:none;
+        }
+
         @media (max-width: 992px){
             .sidebar{
                 width:88px;
@@ -569,6 +638,11 @@ function isActive($controllerName)
 
             .user-box{
                 display:none;
+            }
+
+            .search-box{
+                min-width:100%;
+                max-width:100%;
             }
         }
     </style>
@@ -642,3 +716,27 @@ function isActive($controllerName)
         </header>
 
         <section class="content">
+
+        <?php if (!empty($_SESSION['success'])): ?>
+            <div class="alert alert-success">
+                <i class="fa-solid fa-circle-check"></i>
+                <div><?= htmlspecialchars($_SESSION['success']); ?></div>
+            </div>
+            <?php unset($_SESSION['success']); ?>
+        <?php endif; ?>
+
+        <?php if (!empty($_SESSION['error'])): ?>
+            <div class="alert alert-error">
+                <i class="fa-solid fa-circle-xmark"></i>
+                <div><?= htmlspecialchars($_SESSION['error']); ?></div>
+            </div>
+            <?php unset($_SESSION['error']); ?>
+        <?php endif; ?>
+
+        <?php if (!empty($_SESSION['info'])): ?>
+            <div class="alert alert-info">
+                <i class="fa-solid fa-circle-info"></i>
+                <div><?= htmlspecialchars($_SESSION['info']); ?></div>
+            </div>
+            <?php unset($_SESSION['info']); ?>
+        <?php endif; ?>

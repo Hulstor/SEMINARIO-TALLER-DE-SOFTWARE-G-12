@@ -8,6 +8,13 @@
         </a>
     </div>
 
+    <div class="toolbar">
+        <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Buscar por nombre, cédula, teléfono o email..." data-search-target="tabla-pacientes">
+        </div>
+    </div>
+
     <?php if (!empty($pacientes)): ?>
         <div class="table-responsive">
             <table>
@@ -21,7 +28,7 @@
                         <th>Fecha nacimiento</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="tabla-pacientes">
                     <?php foreach ($pacientes as $p): ?>
                         <tr>
                             <td><?= htmlspecialchars($p['id']); ?></td>

@@ -8,6 +8,13 @@
         </a>
     </div>
 
+    <div class="toolbar">
+        <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Buscar por paciente, médico, fecha o estado..." data-search-target="tabla-citas">
+        </div>
+    </div>
+
     <?php if (!empty($citas)): ?>
         <div class="table-responsive">
             <table>
@@ -23,7 +30,7 @@
                         <th>Acciones</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="tabla-citas">
                     <?php foreach ($citas as $c): ?>
                         <tr>
                             <td><?= htmlspecialchars($c['id']); ?></td>
@@ -52,7 +59,7 @@
                                     </a>
 
                                     <?php if (($_SESSION['usuario_rol'] ?? '') === 'admin'): ?>
-                                        <a href="index.php?controller=cita&action=eliminar&id=<?= $c['id']; ?>" class="btn btn-danger" onclick="return confirm('¿Deseas eliminar esta cita?');">
+                                        <a href="index.php?controller=cita&action=eliminar&id=<?= $c['id']; ?>" class="btn btn-danger" data-confirm="¿Deseas eliminar esta cita?">
                                             <i class="fa-solid fa-trash"></i> Eliminar
                                         </a>
                                     <?php endif; ?>

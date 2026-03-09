@@ -8,6 +8,13 @@
         </a>
     </div>
 
+    <div class="toolbar">
+        <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Buscar por nombre, especialidad, teléfono o email..." data-search-target="tabla-medicos">
+        </div>
+    </div>
+
     <?php if (!empty($medicos)): ?>
         <div class="table-responsive">
             <table>
@@ -20,7 +27,7 @@
                         <th>Email</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="tabla-medicos">
                     <?php foreach ($medicos as $m): ?>
                         <tr>
                             <td><?= htmlspecialchars($m['id']); ?></td>
